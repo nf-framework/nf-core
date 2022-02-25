@@ -1,0 +1,14 @@
+{
+    "@nfjs/core": {
+        "extensions": {
+            "disabled": {
+                "type": "Array<String>",
+                "description": "Список модулей, которые не будут загружаться"
+            },
+            "only": {
+                "type": "Array<String>",
+                "description": "Список модулей для загрузки"
+            }
+        }
+    }
+}
