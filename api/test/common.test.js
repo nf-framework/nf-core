@@ -24,4 +24,45 @@ describe('@nfjs/core/api/common', () => {
             assert.strictEqual(o.another.some, 2);
         });
     });
+    describe('cloneDeep()', () => {
+        it('primitives', () => {
+            // Arrange
+            const source = {a: 1, b: 'foo', c: true};
+            // Act
+            const res = testing.cloneDeep(source);
+            // Assert
+            assert.strictEqual(source === res, false);
+            assert.deepStrictEqual(res, source);
+        });
+        it('date', () => {
+            // Arrange
+            const source = {a: new Date()};
+            // Act
+            const res = testing.cloneDeep(source);
+            // Assert
+            assert.strictEqual(source === res, false);
+            assert.deepStrictEqual(res, source);
+            assert.strictEqual(res.a instanceof Date, true);
+        });
+        it('array', () => {
+            // Arrange
+            const source = {a: [['a',1],['b','t'],['c',true]]};
+            // Act
+            const res = testing.cloneDeep(source);
+            // Assert
+            assert.strictEqual(source === res, false);
+            assert.deepStrictEqual(res, source);
+            assert.strictEqual(Array.isArray(res.a), true);
+        });
+        it('map', () => {
+            // Arrange
+            const source = {a: new Map([['a',1],['b','t'],['c',true]])};
+            // Act
+            const res = testing.cloneDeep(source);
+            // Assert
+            assert.strictEqual(source === res, false);
+            assert.deepStrictEqual(res, source);
+            assert.strictEqual(res.a instanceof Map, true);
+        });
+    });
 });

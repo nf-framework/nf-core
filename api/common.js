@@ -18,13 +18,13 @@ function cloneDeep(obj) {
     if (Array.isArray(obj)) {
         res = [];
         obj.forEach((i) => {
-            res.push(this.cloneDeep(i));
+            res.push(cloneDeep(i));
         });
         return res;
     } else if (toString.call(obj) === '[object Object]') {
         res = {};
         Object.keys(obj).forEach((k) => {
-            res[k] = this.cloneDeep(obj[k]);
+            res[k] = cloneDeep(obj[k]);
         });
     } else {
         res = obj;
