@@ -96,10 +96,28 @@ function compose(str, ...args) {
     return result;
 }
 
+/**
+ * Очистка объекта с данными от служебных свойств
+ * @param {Object} obj
+ */
+function clearObj(obj) {
+    if (obj instanceof Object) {
+        for (const prop in obj) {
+            if (prop.startsWith('__')) {
+                delete obj[prop];
+            } else {
+                const o = obj[prop];
+                if (o instanceof Object) clearObj(o);
+            }
+        }
+    }
+}
+
 export {
     isEmpty,
     cloneDeep,
     setPath,
     getPath,
-    compose
+    compose,
+    clearObj
 };
