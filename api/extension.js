@@ -266,10 +266,18 @@ function getExtensions(name) {
     return sortedExtensions;
 }
 
+function getExtensionsMetaByName(name, extension) {
+    if(extension) {
+        return sortedExtensions.find((m) => m.name === extension).meta[name];
+    }
+    return sortedExtensions.map(x => x?.meta[name]).filter(x => x);
+}
+
 export {
     load,
     getFiles,
     getSortedExtensions,
+    getExtensionsMetaByName,
     getExtensions,
     nfMenuInfo as menuInfo,
     nfMessages
