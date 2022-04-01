@@ -98,12 +98,13 @@ function compose(str, ...args) {
 
 /**
  * Очистка объекта с данными от служебных свойств
- * @param {Object} obj
+ * @param {Object} obj обрабатываемый объект
+ * @param {Array<string>} prefixes префиксы свойств, которые нужно удалить из obj
  */
-function clearObj(obj) {
+function clearObj(obj, prefixes= ['__']) {
     if (obj instanceof Object) {
         for (const prop in obj) {
-            if (prop.startsWith('__')) {
+            if (prefixes.some(prefix => prop.startsWith(prefix))) {
                 delete obj[prop];
             } else {
                 const o = obj[prop];
@@ -111,6 +112,7 @@ function clearObj(obj) {
             }
         }
     }
+    return obj;
 }
 
 export {

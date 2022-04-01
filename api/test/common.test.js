@@ -65,4 +65,38 @@ describe('@nfjs/core/api/common', () => {
             assert.strictEqual(res.a instanceof Map, true);
         });
     });
+    describe('clearObj()', () => {
+        it('default', () => {
+            // Arrange
+            const source = {a_: 1, b__: 'foo', __c: true};
+            // Act
+            testing.clearObj(source);
+            // Assert
+            assert.strictEqual(source.__c, undefined);
+            assert.strictEqual(source.b__, 'foo');
+            assert.strictEqual(source.a_, 1);
+        });
+        it('multiple', () => {
+            // Arrange
+            const source = {a_: 1, b__: 'foo', __c: true, _d: new Date()};
+            // Act
+            testing.clearObj(source, ['__','_']);
+            // Assert
+            assert.strictEqual(source.__c, undefined);
+            assert.strictEqual(source._d, undefined);
+            assert.strictEqual(source.b__, 'foo');
+            assert.strictEqual(source.a_, 1);
+        });
+        it('recursive', () => {
+            // Arrange
+            const source = {a_: 1, b__: {__ba: 'foo', bb__: 'bar'}, __c: true};
+            // Act
+            testing.clearObj(source);
+            // Assert
+            assert.strictEqual(source.__c, undefined);
+            assert.strictEqual(source.b__.__ba, undefined);
+            assert.strictEqual(source.b__.bb__, 'bar');
+            assert.strictEqual(source.a_, 1);
+        });
+    });
 });
