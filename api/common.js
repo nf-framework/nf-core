@@ -101,7 +101,7 @@ function compose(str, ...args) {
  * @param {Object} obj обрабатываемый объект
  * @param {Array<string>} prefixes префиксы свойств, которые нужно удалить из obj
  */
-function clearObj(obj, prefixes= ['__']) {
+function clearObj(obj, prefixes= ['__','_']) {
     if (obj instanceof Object) {
         for (const prop in obj) {
             if (prefixes.some(prefix => prop.startsWith(prefix))) {
