@@ -138,10 +138,11 @@ async function load() {
         let node = menuStruct;
         if (item.form) {
             path && path.forEach((p) => {
-                const [c, i, o] = p.split('$');
+                const [c, i, o, s] = p.split('$');
                 node = node[c] = node[c] || { _items: [] };
                 node._icon = i || node._icon;
                 node._order = o || node._order;
+                node._iconset = s || node._iconset;
             });
             node._items.push(item);
         } else {
@@ -152,6 +153,7 @@ async function load() {
             node._icon = item.icon || node._icon;
             node._order = item.order || node._order;
             node._guid = item.guid || node._guid;
+            node._iconset = item.iconset || node._iconset;
         }
     });
 
@@ -167,11 +169,17 @@ async function load() {
         }
         Object.keys(structNode).forEach((k) => {
             levelItems.push({
-                caption: k, order: structNode[k]._order, icon: structNode[k]._icon, form: '', guid: structNode[k]._guid
+                caption: k,
+                order: structNode[k]._order,
+                icon: structNode[k]._icon,
+                form: '',
+                guid: structNode[k]._guid,
+                iconset: structNode[k]._iconset
             });
             delete structNode[k]._icon;
             delete structNode[k]._order;
             delete structNode[k]._guid;
+            delete structNode[k]._iconset;
         });
 
         levelItems.sort((a, b) => (a.order || 0) - (b.order || 0));
