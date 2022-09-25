@@ -97,7 +97,7 @@ async function load() {
             const befores = nfModules.filter((x) => x.meta && x.meta.require &&
                 (x.meta.require.before === mod.name || (Array.isArray(x.meta.require.before) && x.meta.require.before.includes(mod.name))));
             if (befores.length > 0) {
-                return;
+                continue;
             }
             if (mod.meta && mod.meta.require && mod.meta.require.after) {
                 let { after } = mod.meta.require;
