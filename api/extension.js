@@ -154,6 +154,7 @@ async function load() {
             node._order = item.order || node._order;
             node._guid = item.guid || node._guid;
             node._iconset = item.iconset || node._iconset;
+            node._url = item.url || node._url;
         }
     });
 
@@ -169,16 +170,18 @@ async function load() {
         }
         Object.keys(structNode).forEach((k) => {
             levelItems.push({
-                caption: k,
-                order: structNode[k]._order,
-                icon: structNode[k]._icon,
-                form: '',
-                guid: structNode[k]._guid,
+                caption: k, 
+                order: structNode[k]._order, 
+                icon: structNode[k]._icon, 
+                form: '', 
+                guid: structNode[k]._guid, 
+                url: structNode[k]._url, 
                 iconset: structNode[k]._iconset
             });
             delete structNode[k]._icon;
             delete structNode[k]._order;
             delete structNode[k]._guid;
+            delete structNode[k]._url;
             delete structNode[k]._iconset;
         });
 
@@ -190,7 +193,7 @@ async function load() {
                 buildMenu(structNode[item.caption], id);
             }
         });
-    };
+};
 
     buildMenu(menuStruct, id);
 
