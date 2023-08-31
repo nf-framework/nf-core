@@ -48,7 +48,7 @@ async function load() {
 
     const nfModules = [];
     const exts = getExtensionsFromConfig();
-    for (const item of modules) {
+    for (let item of modules) {
         try {
             let name = item.split('/');
             name.pop();
