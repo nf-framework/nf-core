@@ -1,8 +1,8 @@
 import fs from "fs/promises";
 import path from "path";
 import glob from "fast-glob";
-import {config} from "../index.js";
-import {NFError, NFUnauthorizedError} from "./errors.js"
+import { config } from "../index.js";
+import { NFError } from "./errors.js"
 
 
 let nfMenuInfo = [];
@@ -38,14 +38,15 @@ class Api {
             });
 
             const workspaceName = rootPackage.workspaces[i].replace('/*', '/');
-            paths.forEach((dirPath) => {
+            for (let dirPath of paths) {
                 const pkgPath = dirPath.slice(dirPath.indexOf(workspaceName));
+                const packageJson = JSON.parse(await fs.readFile(path.join(dirPath, 'package.json').replace(/\\/g, '/'), 'utf-8'));
                 packages.push({
                     fullpath: dirPath,
                     path: pkgPath,
-                    moduleName: pkgPath.replace(workspaceName, '').replace('/', '')
+                    moduleName: packageJson.name
                 });
-            });
+            }
         }
 
         return packages;
@@ -286,7 +287,7 @@ class Api {
      * @returns {void}
      */
     static processSyncHooks(name, self, ...args) {
-        hooks[name]?.forEach( i => i.func.apply(self,args));
+        hooks[name]?.forEach(i => i.func.apply(self, args));
     }
 
     static get menuInfo() {
